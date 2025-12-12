@@ -1,0 +1,2 @@
+counter,seed,lr,batch_size,epoch,dropout,fine_tune,test_acc,f1,test_acc_avg,f1_avg,save_path
+0,1,bert-base-uncased,5e-06,16,20,0.5,True,0.8217522658610272,0.822289156626506,0.8217522658610272,0.822289156626506,logs/sentence_classification/1765565172,

@@ -1,16 +1,60 @@
-flair==0.10
-spacy==2.1.8
-spacy-lookups-data==1.0.3
-pillow==6.2.1
-mecab-python3==1.0.4
-uvicorn==0.17.0
-jinja2==3.0.3
-aiofiles==0.8.0
-fastapi==0.72.0
-matplotlib==3.3.1
-toml==0.10.2
-seqeval==1.2.2
-transformers==4.15.0
+# flair==0.10
+flair
+
+# spacy==2.1.8
+spacy
+
+# spacy-lookups-data==1.0.3
+spacy-lookups-data
+
+# pillow==6.2.1
+pillow
+
+# mecab-python3==1.0.4
+mecab-python3
+
+# uvicorn==0.17.0
+# jinja2==3.0.3
+# aiofiles==0.8.0
+# fastapi==0.72.0
+
+uvicorn
+jinja2
+aiofiles
+fastapi
+
+
+# matplotlib==3.3.1
+matplotlib
+
+# toml==0.10.2
+toml
+
+
+# seqeval==1.2.2
+seqeval
+
+
+# transformers==4.15.0
+transformers
+
 sudachipy
 tensorboard
+# torch
+# torch==1.4.0
 torch
+
+#  ---- (FKH) added from relation_extraction requirements.txt
+# numpy==1.18.3
+numpy
+
+# scikit_learn==0.21.3
+scikit_learn
+
+
+# --- (FKH) added from attack_pattern requirements.txt
+tqdm 
+torchtext
+pandas
+nltk
+sentence_transformers

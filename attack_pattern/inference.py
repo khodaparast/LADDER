@@ -4,6 +4,7 @@ import os
 
 from argparser import parse_inference_arguments as parse_args
 from models import EntityRecognition, SentenceClassificationBERT, SentenceClassificationRoBERTa
+
 from config import *
 
 def remove_consec_newline(s):
@@ -127,6 +128,8 @@ def is_valid_step(text):
 def infer():
     nltk.download('punkt')
     nltk.download('averaged_perceptron_tagger')
+    nltk.download('punkt_tab')
+    nltk.download('averaged_perceptron_tagger_eng')
 
     args = parse_args()
 
@@ -138,7 +141,26 @@ def infer():
     # print(device)
     
     entity_model = EntityRecognition(args.entity_extraction_model).to(device)
-    entity_model.load_state_dict(torch.load(args.entity_extraction_weight, map_location=device))
+    
+    # entity_model.load_state_dict(torch.load(args.entity_extraction_weight, map_location=device)) # <-- REMOVE THIS LINE
+    
+    # --- START CORRECTED LOADING LOGIC ---
+    
+    # 1. Load the raw state dict from the .pt file
+    state_dict = torch.load(args.entity_extraction_weight, map_location=device)
+    
+    # 2. Define the key that needs to be ignored/removed (the unexpected key from the error)
+    problem_key = "bert_layer.embeddings.position_ids" 
+    
+    # 3. Create a new state dict, excluding the problem key
+    filtered_state_dict = {
+        k: v for k, v in state_dict.items() if k != problem_key
+    }
+    
+    # 4. Load the cleaned state dict into the model
+    entity_model.load_state_dict(filtered_state_dict)
+
+    # --- END CORRECTED LOADING LOGIC ---
 
 
     if MODELS[args.sentence_classification_model][3] == 'bert':
@@ -146,7 +168,26 @@ def infer():
         sentence_model.load_state_dict(torch.load(args.sentence_classification_weight, map_location=device))
     elif MODELS[args.sentence_classification_model][3] == 'roberta':
         sentence_model = SentenceClassificationRoBERTa(args.sentence_classification_model, num_class=2).to(device)
-        sentence_model.load_state_dict(torch.load(args.sentence_classification_weight, map_location=device))
+        
+        # --- START FIX for SentenceClassificationRoBERTa ---
+        
+        # 1. Load the raw state dict
+        state_dict_sen = torch.load(args.sentence_classification_weight, map_location=device)
+        
+        # 2. Define the new problematic key
+        # The error was: "bert.roberta.embeddings.position_ids"
+        problem_key_sen = "bert.roberta.embeddings.position_ids" 
+        
+        # 3. Create a new state dict, excluding the problem key
+        filtered_state_dict_sen = {
+            k: v for k, v in state_dict_sen.items() if k != problem_key_sen
+        }
+        
+        # 4. Load the cleaned state dict into the model
+        sentence_model.load_state_dict(filtered_state_dict_sen)
+
+        # --- END FIX ---
+        
     else:
         raise ValueError('Unknown sentence classification model')
 

@@ -1,9 +1,9 @@
-numpy
-transformers==v3.1.0
+# numpy
+# transformers==v3.1.0
 tqdm
-torch
-sklearn
-spacy
+# torch
+# scikit-learn
+# spacy
 torchtext
 pandas
 nltk

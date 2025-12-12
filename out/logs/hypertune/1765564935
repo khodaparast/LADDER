@@ -1,0 +1,17 @@
+
+
+
+
+
+****************************************          Parameters{'model': 'bert-base-uncased', 'lr': 5e-06, 'batch_size': 16, 'epoch': 20, 'dropout': 0.5, 'fine_tune': True}
+Namespace(task='atk-pattern', dataset='data/sentence_classification', cuda=True, lr=5e-06, dropout=0.5, decay=0.0, model='bert-base-uncased', seed=1, batch_size=16, epoch=20, fine_tune=True, save_path='logs/sentence_classification/1765564935')
+
+
+
+Exception occurred for configuration: {'model': 'bert-base-uncased', 'lr': 5e-06, 'batch_size': 16, 'epoch': 20, 'dropout': 0.5, 'fine_tune': True}[Errno 2] No such file or directory: 'data/sentence_classification/train.csv'
+
+
+
+****************************************Results:[]
+
+****************************************

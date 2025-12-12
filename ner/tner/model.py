@@ -9,7 +9,12 @@ import transformers
 import torch
 from torch import nn
 from seqeval.metrics import f1_score, precision_score, recall_score, classification_report
+from transformers import BertModel, BertConfig, RobertaModel, AdamW, AutoTokenizer 
+# Make sure to include RobertaModel!
+
 from torch.utils.tensorboard import SummaryWriter
+
+import torch.optim as optim
 
 from .get_dataset import get_dataset_ner
 from .checkpoint_versioning import Argument
@@ -161,7 +166,8 @@ class TrainTransformersNER:
              "weight_decay": self.args.weight_decay},
             {"params": [p for n, p in self.model.named_parameters() if any(nd in n for nd in no_decay)],
              "weight_decay": 0.0}]
-        self.optimizer = transformers.AdamW(optimizer_grouped_parameters, lr=self.args.lr, eps=1e-8)
+        # self.optimizer = transformers.AdamW(optimizer_grouped_parameters, lr=self.args.lr, eps=1e-8)
+        self.optimizer = optim.AdamW(optimizer_grouped_parameters, lr=self.args.lr, eps=1e-8)
 
         # scheduler
         self.scheduler = transformers.get_constant_schedule_with_warmup(

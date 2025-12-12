@@ -1,0 +1,4 @@
+Namespace(task='atk-pattern', dataset='data/sentence_classification', cuda=True, lr=5e-06, dropout=0.5, decay=0.0, model='bert-base-uncased', seed=1, batch_size=16, epoch=20, fine_tune=True, save_path='logs/sentence_classification/1765565172')
+Test Acc: 0.8217522658610272, Test Pr: 0.8198198198198198, Test Re: 0.824773413897281, Test F1: 0.822289156626506
+[[271  60]
+ [ 58 273]]
